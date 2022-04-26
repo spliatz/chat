@@ -82,6 +82,7 @@ body {
       flex-direction: column;
       font-size: 16px;
       font-family: "Roboto", sans-serif;
+      word-break: break-all;
 
       .message-inner {
         display: flex;
