@@ -3,7 +3,8 @@ export const WIDGET_UI = {
     SETTING__BTN: document.getElementById('setting-btn'),
     INPUT: document.getElementById('write__input'),
     WRITE__BTN: document.getElementById('write__btn'),
-    CONTAINER: document.getElementById('message-container')
+    CONTAINER: document.getElementById('message-container'),
+    EXIT: document.getElementById('exit-btn')
 }
 
 export const USERS = {

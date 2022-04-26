@@ -11,10 +11,17 @@ export default class writeMessage {
 
     init() {
         this.input.addEventListener('keydown', event => {
-            if (event.key === 'Enter') {
+            if (event.key === 'Enter' && this.input.value) {
                 this.sendMessage(this.input.value);
                 this.input.value = '';
             }
+        })
+        this.inputBtn.addEventListener('click', (_) => {
+            if (this.input.value) {
+                this.sendMessage(this.input.value);
+                this.input.value = '';
+            }
+
         })
 
     }
