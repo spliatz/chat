@@ -18,12 +18,9 @@ export const SETTINGS__WINDOW = {
 }
 
 export default function messageTemplate(user,message,time) {
-    time = time.split(':');
-
+    time = time.split(':').splice(0,2).join(':');
     return `
-    <div class="message my-message">
-        <div class="message-inner">${user}: ${message}</div>
-        <div class="send-time">${time[0]}:${time[1]}</div>
-    </div>
+        <div class="message-inner"><div class="userNoSelect">${user}:</div><div>${message}</div></div>
+        <div class="send-time">${time}</div>
     `
 }
