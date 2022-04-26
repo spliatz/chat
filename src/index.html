@@ -7,35 +7,16 @@
 </head>
 <body>
 <div class="widget-bg"></div>
-<div id="widget" class="widget__box">
-        <div class="settings-and-exit">
-            <button id="setting-btn" class="settings">Настройки</button>
-            <button class="exit">Выйти</button>
-        </div>
-        <div class="message-container">
-            <div class="message my-message">
-                <div class="message-inner">Я: Добрый день!</div>
-                <div class="send-time">18:45</div>
+    <div id="widget" class="widget__box">
+            <div class="settings-and-exit">
+                <button id="setting-btn" class="settings">Настройки</button>
+                <button class="exit">Выйти</button>
             </div>
-            <div class="message">
-                <div class="message-inner">Собеседник мой: Добрый день!</div>
-                <div class="send-time">18:45</div>
+            <div class="message-container" id="message-container"></div>
+            <div class="write-message">
+                <input id="write__input" placeholder="сообщение.." type="text" class="message-input">
+                <button id="write__btn" class="message-button">-></button>
             </div>
-            <div class="message">
-                <div class="message-inner">Собеседник мой: А это второе и, кажется, оно очень
-                    длинное, чтобы поместиться на
-                    одной строке</div>
-                <div class="send-time">18:45</div>
-            </div>
-            <div class="message my-message delivered">
-                <div class="message-inner">Я: Добрый день!</div>
-                <div class="send-time">18:45</div>
-            </div>
-        </div>
-        <div class="write-message">
-            <input placeholder="сообщение.." type="text" class="message-input">
-            <button class="message-button">-></button>
-        </div>
     </div>
 <div id="setting-window" class="setting-window">
     <div class="name-and-close">
