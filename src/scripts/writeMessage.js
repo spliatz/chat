@@ -32,5 +32,6 @@ export default class writeMessage {
         message.className = 'message my-message';
         message.innerHTML = messageTemplate(USERS.USER__DEFAULT, value, date.toLocaleTimeString());
         this.container.prepend(message);
+        this.container.scrollBy(0, this.container.offsetHeight - this.container.scrollTop);
     }
 }
