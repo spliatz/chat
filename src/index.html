@@ -19,14 +19,31 @@
     </div>
 </div>
 <div id="setting-window" class="setting-window">
-    <div class="name-and-close">
-        <h1>Настройки</h1>
-        <button id="setting-window__close">+</button>
+    <div class="setting-window-content">
+        <div class="name-and-close">
+            <h1>Настройки</h1>
+            <button id="setting-window__close">+</button>
+        </div>
+        <h2>Имя в чате</h2>
+        <div class="write-name">
+            <input placeholder="ваше имя" autocomplete="off" type="text" class="message-input">
+            <button class="mame-button">-></button>
+        </div>
     </div>
-    <h2>Имя в чате</h2>
-    <div class="write-name">
-        <input placeholder="ваше имя" autocomplete="off" type="text" class="message-input">
-        <button class="mame-button">-></button>
+</div>
+<div id="authorization" class="authorization__wrapper">
+    <div class="authorization__content">
+        <div class="authorization-close-box">
+            <h1>Авторизация</h1>
+            <button id="authorization-close">+</button>
+        </div>
+        <div class="authorization-input__wrapper">
+        <h2>Почта:</h2>
+            <div class="write-email">
+                <input placeholder="email" autocomplete="off" type="text" class="authorization-input">
+                <button class="get-code">Получить код</button>
+            </div>
+        </div>
     </div>
 </div>
 </body>

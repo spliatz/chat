@@ -25,41 +25,11 @@ export default class settingsWindow {
 
     showWindow() {
         this.WINDOW.style.display = 'flex';
-        //
-        this.WIDGET.style.opacity = '0.5';
-        //
-        this.container.style.userSelect = 'none';
-        //
-        this.input.setAttribute('disabled', '');
-        this.input.style.userSelect = 'none';
-        //
-        this.inputBtn.setAttribute('disabled', '');
-        this.inputBtn.style.cursor = 'default';
-        //
-        this.exit.setAttribute('disabled', '');
-        this.exit.style.cursor = 'default';
-        //
-        this.SETTING__BTN.setAttribute('disabled', '');
-        this.SETTING__BTN.style.cursor = 'default';
+        this.WIDGET.style.display = 'none'
     }
 
     closeWindow() {
         this.WINDOW.style.display = 'none';
-        //
-        this.WIDGET.style.opacity = '1';
-        //
-        this.container.style.userSelect = 'default';
-        //
-        this.input.removeAttribute('disabled');
-        this.input.style.userSelect = 'text';
-        //
-        this.inputBtn.removeAttribute('disabled');
-        this.inputBtn.style.cursor = 'pointer';
-        //
-        this.exit.removeAttribute('disabled');
-        this.exit.style.cursor = 'pointer';
-        //
-        this.SETTING__BTN.removeAttribute('disabled');
-        this.SETTING__BTN.style.cursor = 'pointer';
+        this.WIDGET.style.display = 'flex'
     }
 }
