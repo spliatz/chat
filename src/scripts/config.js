@@ -4,7 +4,9 @@ export const WIDGET_UI = {
     INPUT: document.getElementById('write__input'),
     WRITE__BTN: document.getElementById('write__btn'),
     CONTAINER: document.getElementById('message-container'),
-    EXIT: document.getElementById('exit-btn')
+    EXIT: document.getElementById('exit-btn'),
+    AUTHORIZATION: document.getElementById('authorization'),
+    AUTHORIZATION__CLOSE: document.getElementById('authorization-close'),
 }
 
 export const USERS = {

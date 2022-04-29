@@ -1,9 +1,8 @@
 'use strict';
 import './styles/index.scss';
-import settingsWindow from './scripts/settings-window';
-import writeMessage from './scripts/writeMessage';
+import APP from './scripts/app';
 
-const settingsModalWindow = new settingsWindow();
-const sendMessage = new writeMessage();
-settingsModalWindow.init();
-sendMessage.init();
+document.addEventListener("DOMContentLoaded", () => {
+    const app = new APP();
+    app.run();
+});
