@@ -3,6 +3,6 @@ import './styles/index.scss';
 import APP from './scripts/app';
 
 document.addEventListener("DOMContentLoaded", () => {
-    const app = new APP();
+   const app = new APP();
     app.run();
 });

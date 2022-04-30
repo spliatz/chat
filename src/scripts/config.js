@@ -1,3 +1,5 @@
+'use strict';
+
 export const WIDGET_UI = {
     WIDGET: document.getElementById('widget'),
     SETTING__BTN: document.getElementById('setting-btn'),
@@ -5,24 +7,43 @@ export const WIDGET_UI = {
     WRITE__BTN: document.getElementById('write__btn'),
     CONTAINER: document.getElementById('message-container'),
     EXIT: document.getElementById('exit-btn'),
-    AUTHORIZATION: document.getElementById('authorization'),
-    AUTHORIZATION__CLOSE: document.getElementById('authorization-close'),
-}
-
-export const USERS = {
-    USER__DEFAULT: "Я",
-    SECOND__USER: "Собеседник мой",
-}
+};
 
 export const SETTINGS__WINDOW = {
     WINDOW: document.getElementById('setting-window'),
     CLOSE__BTN: document.getElementById('setting-window__close'),
-}
+    INPUT: document.getElementById('settings-input'),
+    BTN: document.getElementById('settings-btn'),
+};
 
-export default function messageTemplate(user,message,time) {
-    time = time.split(':').splice(0,2).join(':');
+export const AUTHORIZATION__WINDOW = {
+    WRAPPER: document.getElementById('authorization'),
+    CLOSE: document.getElementById('authorization-close'),
+    INPUT: document.getElementById('email-input'),
+    BTN: document.getElementById('email-btn'),
+};
+
+export const USERS = {
+    USER__DEFAULT: 'Я',
+    SECOND__USER: 'Собеседник мой',
+};
+
+export const CONFIRMATION__WINDOW = {
+    WRAPPER: document.getElementById('confirmation'),
+    CLOSE: document.getElementById('confirmation-close'),
+    INPUT: document.getElementById('code-input'),
+    BTN: document.getElementById('code-btn'),
+};
+
+export default function messageTemplate(user, message, time) {
+    time = time.split(':').splice(0, 2).join(':');
     return `
         <div class="message-inner"><div class="userNoSelect">${user}:</div><div>${message}</div></div>
-        <div class="send-time">${time}</div>
-    `
+        <div class="send-time">${getString(time)}</div>
+    `;
+}
+
+function getString(number) {
+    if (number.split(':')[1].length < 2) return number.split(':')[0] + ':' + '0' + number.split(':')[1];
+    return number;
 }

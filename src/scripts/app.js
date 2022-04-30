@@ -1,10 +1,6 @@
-import settingsWindow from './settings-window';
-import writeMessage from './writeMessage';
-import authorization from './authorization';
+import widget from './widget';
 
-const sendMessage = new writeMessage();
-const settingsModalWindow = new settingsWindow();
-const authorizationWindow = new authorization();
+const widgetApp = new widget();
 
 export default class APP {
 
@@ -12,9 +8,6 @@ export default class APP {
     }
 
     run() {
-        sendMessage.init();
-        settingsModalWindow.init();
-        authorizationWindow.init();
+        widgetApp.init();
     }
-
 }

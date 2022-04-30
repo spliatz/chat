@@ -10,7 +10,7 @@
 <div id="widget" class="widget__box">
     <div class="settings-and-exit">
         <button id="setting-btn" class="settings">Настройки</button>
-        <button id="exit-btn" class="exit">Выйти</button>
+        <button id="exit-btn" class="exit">Войти</button>
     </div>
     <div class="message-container" id="message-container"></div>
     <div class="write-message">
@@ -26,8 +26,8 @@
         </div>
         <h2>Имя в чате</h2>
         <div class="write-name">
-            <input placeholder="ваше имя" autocomplete="off" type="text" class="message-input">
-            <button class="mame-button">-></button>
+            <input id="settings-input" placeholder="ваше имя" autocomplete="off" type="text" class="message-input">
+            <button id="settings-btn" class="mame-button">-></button>
         </div>
     </div>
 </div>
@@ -40,8 +40,8 @@
         <div class="authorization-input__wrapper">
         <h2>Почта:</h2>
             <div class="write-email">
-                <input placeholder="email" autocomplete="off" type="text" class="authorization-input">
-                <button class="get-code">Получить код</button>
+                <input id="email-input" placeholder="email" autocomplete="off" type="email" class="authorization-input">
+                <button id="email-btn" class="get-code">Получить код</button>
             </div>
         </div>
     </div>
@@ -55,8 +55,8 @@
     <div class="confirmation-input__wrapper">
         <h2>Код:</h2>
             <div class="write-code">
-                <input placeholder="code" autocomplete="off" type="text" class="confirmation-input">
-                <button class="sign-in">Войти</button>
+                <input id="code-input" placeholder="code" autocomplete="off" type="text" class="confirmation-input">
+                <button id="code-btn" class="sign-in">Войти</button>
             </div>
         </div>
 </div>

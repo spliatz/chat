@@ -6,8 +6,6 @@ if (process.env.NODE_ENV === 'production') {
     mode = 'production';
 }
 
-
-
 module.exports = {
     mode: mode,
     entry: {
@@ -26,9 +24,8 @@ module.exports = {
     plugins: [
         new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
-        template: "./src/index.html",
-        favicon: "./src/images/favicon.ico"
-
+            template: "./src/index.html",
+            favicon: "./src/images/favicon.ico"
         })],
     module: {
         rules: [
@@ -56,7 +53,7 @@ module.exports = {
                 ],
             },
             {
-                test: /\.(png|svg|jpeg|jpg|gif|ico)$/i,
+                test: /\.(png|svg|jpeg|jpg|gif)$/i,
                 type: "asset/resource",
             },
             {
