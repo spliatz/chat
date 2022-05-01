@@ -98,7 +98,6 @@ export default class authorization {
         });
     }
 
-
     requestAuthorization() {
         const response = fetch(this.confirmAdress,
             {
@@ -129,13 +128,13 @@ export default class authorization {
         this.authorizationBlock.style.display = 'flex';
     }
 
+    showConfirmWindow() {
+        this.confirmWrapper.style.display = 'flex';
+    }
+
     closeAuthorizationWindow() {
         this.authorizationBlock.style.display = 'none';
         this.emailInput.value = '';
-    }
-
-    showConfirmWindow() {
-        this.confirmWrapper.style.display = 'flex';
     }
 
     closeConfirmWindow() {

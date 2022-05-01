@@ -2,6 +2,7 @@ import settingsWindow from './settings-window';
 import authorization from './authorization';
 import { WIDGET_UI } from './config';
 import messageTemplate from './config';
+import { PRELOADER } from './config';
 import Cookies from 'js-cookie';
 
 const settingsModalWindow = new settingsWindow();
@@ -9,7 +10,7 @@ const authorizationWindow = new authorization();
 
 export default class widget {
     constructor() {
-        this.mesagges =  [];
+        this.messages = [];
         this.input = WIDGET_UI.INPUT;
         this.inputBtn = WIDGET_UI.WRITE__BTN;
         this.container = WIDGET_UI.CONTAINER;
@@ -22,8 +23,18 @@ export default class widget {
             this.eventListener();
             settingsModalWindow.init();
             authorizationWindow.init();
+            this.preloadCLose();
+
         });
 
+    }
+
+    preloadCLose() {
+        document.body.classList.add('loaded_hiding');
+        window.setTimeout(function () {
+            document.body.classList.add('loaded');
+            document.body.classList.remove('loaded_hiding');
+        }, 1000);
     }
 
     loadHistory() {
@@ -59,22 +70,23 @@ export default class widget {
     }
 
     sendMessage(value, user, date, isMyMessage) {
-        this.mesagges.push({
+        this.messages.push({
             text: value,
             user: {email: '', name: user},
             date: date,
             isMyMessage: isMyMessage,
         });
+        settingsModalWindow.updateMessagesArray(this.messages);
     }
 
     render() {
         this.clearMessagesBox();
-        this.mesagges.forEach((item) => {
+        this.messages.forEach((item) => {
             let message = document.createElement('div');
             message.className = `message  ${item.isMyMessage ? 'my-message' : ''}`;
             message.innerHTML = messageTemplate(
                 item.isMyMessage && Cookies.get('name') ? Cookies.get('name') :
-                item.user.name ? item.user.name : item.user.email,
+                    item.user.name ? item.user.name : item.user.email,
                 item.text,
                 item.date);
             this.container.prepend(message);

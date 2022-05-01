@@ -1,7 +1,7 @@
-import { WIDGET_UI, SETTINGS__WINDOW } from './config';
+import messageTemplate, { WIDGET_UI, SETTINGS__WINDOW } from './config';
 import Cookies from 'js-cookie';
 
-export default class settingsWindow {
+export default class settingsWindow{
     constructor() {
         this.WIDGET = WIDGET_UI.WIDGET;
         this.SETTING__BTN = WIDGET_UI.SETTING__BTN;
@@ -12,18 +12,51 @@ export default class settingsWindow {
         this.input = SETTINGS__WINDOW.INPUT;
         this.btn = SETTINGS__WINDOW.BTN;
         this.name = '';
+        this.messages = [];
     }
 
     init() {
         this.eventListener();
     }
 
+    updateMessagesArray(messages) {
+        this.messages = messages;
+    }
+
+    renderMessages() {
+        this.clearMessagesBox();
+        this.messages.forEach((item) => {
+            let message = document.createElement('div');
+            message.className = `message  ${item.isMyMessage ? 'my-message' : ''}`;
+            message.innerHTML = messageTemplate(
+                item.isMyMessage && Cookies.get('name') ? Cookies.get('name') :
+                    item.user.name ? item.user.name : item.user.email,
+                item.text,
+                item.date);
+            this.container.prepend(message);
+            this.container.scrollBy(0, this.container.offsetHeight - this.container.scrollTop);
+        });
+    }
+
+    clearMessagesBox() {
+        this.container.innerHTML = '';
+    }
+
     eventListener() {
 
         this.input.addEventListener('keydown', event => {
-            if (event.key === 'Enter') {
+            if (event.key === 'Enter' && this.input.value) {
                 this.setName(this.input.value);
                 this.input.value = '';
+                this.closeWindow();
+            }
+        });
+
+        this.btn.addEventListener('click', event => {
+            if (this.input.value) {
+                this.setName(this.input.value);
+                this.input.value = '';
+                this.closeWindow();
             }
         });
 
@@ -47,6 +80,7 @@ export default class settingsWindow {
             body: JSON.stringify({name: `${name}`}),
         }).then(res => {
             +res.status === 200 ? Cookies.set('name', name) : this.renderError();
+            this.renderMessages();
         });
     }
 
