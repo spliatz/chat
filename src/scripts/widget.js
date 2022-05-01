@@ -2,7 +2,6 @@ import settingsWindow from './settings-window';
 import authorization from './authorization';
 import { WIDGET_UI } from './config';
 import messageTemplate from './config';
-import { PRELOADER } from './config';
 import Cookies from 'js-cookie';
 
 const settingsModalWindow = new settingsWindow();

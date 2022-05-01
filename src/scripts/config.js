@@ -1,9 +1,5 @@
 'use strict';
 
-export const PRELOADER = {
-    WRAPPER: document.getElementById('preloader'),
-}
-
 export const WIDGET_UI = {
     WIDGET: document.getElementById('widget'),
     SETTING__BTN: document.getElementById('setting-btn'),
