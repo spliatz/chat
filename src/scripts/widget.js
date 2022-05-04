@@ -43,6 +43,10 @@ export default class widget {
         });
     }
 
+    updateSocket() {
+        this.socket = new WebSocket(`wss://mighty-cove-31255.herokuapp.com/websockets?${Cookies.get('token')}`);
+    }
+
     preloadCLose() {
         document.body.classList.add('loaded_hiding');
         window.setTimeout(function() {

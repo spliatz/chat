@@ -45,6 +45,7 @@ export class settingsWindow extends widget {
         }).then(res => {
             if (res.status === 200) {
                 Cookies.set('name', name);
+                super.updateSocket();
                 super.loadHistory();
                 super.render();
             } else {

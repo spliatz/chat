@@ -32,7 +32,7 @@ export class authorization extends widget {
                         this.setEmail(this.emailInput.value);
                         this.showConfirmWindow();
                         this.closeAuthorizationWindow();
-                    })
+                    });
 
                 } else {
                     this.emailInput.value = '';
@@ -77,6 +77,7 @@ export class authorization extends widget {
         });
 
         this.confirmClose.addEventListener('click', () => {
+            Cookies.remove('email')
             this.closeConfirmWindow();
             this.showWidget();
         });
@@ -87,13 +88,12 @@ export class authorization extends widget {
             {
                 'headers': {'Content-Type': 'application/json'},
                 'method': 'POST',
-                body: JSON.stringify({email: `${this.email}`}),
+                body: JSON.stringify({email: `${Cookies.get('email')}`}),
             });
     }
 
     setEmail(email) {
-        this.email = email;
-        Cookies.set('email', this.email);
+        Cookies.set('email', email);
     }
 
     codeRequest(code) {
