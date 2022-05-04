@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 
 export default class widget {
     constructor() {
-        this.socket = new WebSocket(`ws://mighty-cove-31255.herokuapp.com/websockets?${Cookies.get('token')}`);
+        this.socket = new WebSocket(`wss://mighty-cove-31255.herokuapp.com/websockets?${Cookies.get('token')}`);
         this.messages = [];
         this.widget = WIDGET_UI.WIDGET;
         this.input = WIDGET_UI.INPUT;
