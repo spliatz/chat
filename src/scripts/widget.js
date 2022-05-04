@@ -1,5 +1,4 @@
-import settingsWindow from './settings-window';
-import { WIDGET_UI, getString, AUTHORIZATION__WINDOW, CONFIRMATION__WINDOW } from './config';
+import { WIDGET_UI, getString, AUTHORIZATION__WINDOW, CONFIRMATION__WINDOW, SETTINGS__WINDOW } from './config';
 import messageTemplate from './config';
 import Cookies from 'js-cookie';
 
@@ -13,6 +12,12 @@ export default class widget {
         this.inputBtn = WIDGET_UI.WRITE__BTN;
         this.container = WIDGET_UI.CONTAINER;
         //
+        this.settingsOpenBtn = WIDGET_UI.SETTING__BTN
+        this.settingsCloseBtn = SETTINGS__WINDOW.CLOSE__BTN
+        this.settingsWindow = SETTINGS__WINDOW.WINDOW
+        this.settingsInput = SETTINGS__WINDOW.INPUT
+        this.settingBtn = SETTINGS__WINDOW.BTN
+        //
         this.authorizationBlock = AUTHORIZATION__WINDOW.WRAPPER;
         this.closeAuthorization = AUTHORIZATION__WINDOW.CLOSE;
         this.emailInput = AUTHORIZATION__WINDOW.INPUT;
@@ -22,8 +27,6 @@ export default class widget {
         this.confirmClose = CONFIRMATION__WINDOW.CLOSE;
         this.codeInput = CONFIRMATION__WINDOW.INPUT;
         this.codeBtn = CONFIRMATION__WINDOW.BTN;
-        //
-        this.user = 'Я';
         //
         this.confirmAdress = 'https://mighty-cove-31255.herokuapp.com/api/user';
         this.getAdress = 'https://mighty-cove-31255.herokuapp.com/api/messages';

@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import widget from './widget';
 
-export default class authorization extends widget {
+export class authorization extends widget {
     init() {
         this.eventListener();
     }
@@ -28,10 +28,12 @@ export default class authorization extends widget {
             if (event.key === 'Enter') {
                 if (this.emailInput.value.length > 4 && this.emailInput.value.includes('@')
                     && this.emailInput.value.includes('.')) {
-                    this.setEmail(this.emailInput.value);
-                    this.requestAuthorization();
-                    this.showConfirmWindow();
-                    this.closeAuthorizationWindow();
+                    this.requestAuthorization().then(() => {
+                        this.setEmail(this.emailInput.value);
+                        this.showConfirmWindow();
+                        this.closeAuthorizationWindow();
+                    })
+
                 } else {
                     this.emailInput.value = '';
                     this.emailInput.style.background = '#f29e8c';

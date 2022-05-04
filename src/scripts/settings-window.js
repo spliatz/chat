@@ -1,73 +1,36 @@
-import messageTemplate, { WIDGET_UI, SETTINGS__WINDOW } from './config';
 import Cookies from 'js-cookie';
 import widget from './widget';
 
-export default class settingsWindow{
-    constructor() {
-        this.WIDGET = WIDGET_UI.WIDGET;
-        this.SETTING__BTN = WIDGET_UI.SETTING__BTN;
-        this.exit = WIDGET_UI.EXIT;
-        this.container = WIDGET_UI.CONTAINER;
-        this.WINDOW = SETTINGS__WINDOW.WINDOW;
-        this.CLOSE__BTN = SETTINGS__WINDOW.CLOSE__BTN;
-        this.input = SETTINGS__WINDOW.INPUT;
-        this.btn = SETTINGS__WINDOW.BTN;
-        this.name = '';
-        this.messages = [];
-    }
+export class settingsWindow extends widget {
 
     init() {
         this.eventListener();
     }
 
-    updateMessagesArray(messages) {
-        this.messages = messages;
-    }
-
-    renderMessages() {
-        this.clearMessagesBox();
-        this.messages.forEach((item) => {
-            let message = document.createElement('div');
-            message.className = `message  ${item.isMyMessage ? 'my-message' : ''}`;
-            message.innerHTML = messageTemplate(
-                item.isMyMessage && Cookies.get('name') ? Cookies.get('name') :
-                    item.user.name ? item.user.name : item.user.email,
-                item.text,
-                item.date);
-            this.container.prepend(message);
-            this.container.scrollBy(0, this.container.offsetHeight - this.container.scrollTop);
-        });
-    }
-
-    clearMessagesBox() {
-        this.container.innerHTML = '';
-    }
-
     eventListener() {
-
-        this.input.addEventListener('keydown', event => {
-            if (event.key === 'Enter' && this.input.value) {
-                this.setName(this.input.value);
-                this.input.value = '';
+        this.settingsInput.addEventListener('keydown', event => {
+            if (event.key === 'Enter' && this.settingsInput.value) {
+                this.setName(this.settingsInput.value);
+                this.settingsInput.value = '';
                 this.closeWindow();
             }
         });
 
-        this.btn.addEventListener('click', event => {
-            if (this.input.value) {
-                this.setName(this.input.value);
-                this.input.value = '';
+        this.settingBtn.addEventListener('click', () => {
+            if (this.settingsInput.value) {
+                this.setName(this.settingsInput.value);
+                this.settingsInput.value = '';
                 this.closeWindow();
             }
         });
 
-        this.SETTING__BTN.addEventListener('click', () => {
+        this.settingsOpenBtn.addEventListener('click', () => {
             this.showWindow();
         });
 
-        this.CLOSE__BTN.addEventListener('click', () => {
+        this.settingsCloseBtn.addEventListener('click', () => {
             this.closeWindow();
-            this.input.value = '';
+            this.settingsInput.value = '';
         });
     }
 
@@ -80,24 +43,29 @@ export default class settingsWindow{
             method: 'PATCH',
             body: JSON.stringify({name: `${name}`}),
         }).then(res => {
-            +res.status === 200 ? Cookies.set('name', name) : this.renderError();
-            this.renderMessages();
+            if (res.status === 200) {
+                Cookies.set('name', name);
+                super.loadHistory();
+                super.render();
+            } else {
+                this.renderError();
+            }
         });
     }
 
     showWindow() {
-        this.WINDOW.style.display = 'flex';
-        this.WIDGET.style.display = 'none';
+        this.settingsWindow.style.display = 'flex';
+        this.widget.style.display = 'none';
     }
 
     closeWindow() {
-        this.WINDOW.style.display = 'none';
-        this.WIDGET.style.display = 'flex';
+        this.settingsWindow.style.display = 'none';
+        this.widget.style.display = 'flex';
     }
 
     renderError() {
-        this.input.value = '';
-        this.input.style.background = '#f29e8c';
-        setTimeout(() => this.input.style.background = '', 1000);
+        this.settingsInput.value = '';
+        this.settingsInput.style.background = '#f29e8c';
+        setTimeout(() => this.settingsInput.style.background = '', 1000);
     }
 }
