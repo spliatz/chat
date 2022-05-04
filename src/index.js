@@ -6,3 +6,4 @@ document.addEventListener("DOMContentLoaded", () => {
    const app = new APP();
     app.run();
 });
+

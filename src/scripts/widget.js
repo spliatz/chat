@@ -1,29 +1,42 @@
 import settingsWindow from './settings-window';
-import authorization from './authorization';
-import { WIDGET_UI, getString } from './config';
+import { WIDGET_UI, getString, AUTHORIZATION__WINDOW, CONFIRMATION__WINDOW } from './config';
 import messageTemplate from './config';
 import Cookies from 'js-cookie';
-
-const settingsModalWindow = new settingsWindow();
-const authorizationWindow = new authorization();
 
 export default class widget {
     constructor() {
         this.socket = new WebSocket(`ws://mighty-cove-31255.herokuapp.com/websockets?${Cookies.get('token')}`);
         this.messages = [];
+        this.widget = WIDGET_UI.WIDGET;
         this.input = WIDGET_UI.INPUT;
+        this.exit = WIDGET_UI.EXIT;
         this.inputBtn = WIDGET_UI.WRITE__BTN;
         this.container = WIDGET_UI.CONTAINER;
+        //
+        this.authorizationBlock = AUTHORIZATION__WINDOW.WRAPPER;
+        this.closeAuthorization = AUTHORIZATION__WINDOW.CLOSE;
+        this.emailInput = AUTHORIZATION__WINDOW.INPUT;
+        this.emailBtn = AUTHORIZATION__WINDOW.BTN;
+        //
+        this.confirmWrapper = CONFIRMATION__WINDOW.WRAPPER;
+        this.confirmClose = CONFIRMATION__WINDOW.CLOSE;
+        this.codeInput = CONFIRMATION__WINDOW.INPUT;
+        this.codeBtn = CONFIRMATION__WINDOW.BTN;
+        //
         this.user = 'Я';
+        //
+        this.confirmAdress = 'https://mighty-cove-31255.herokuapp.com/api/user';
         this.getAdress = 'https://mighty-cove-31255.herokuapp.com/api/messages';
+        this.aboutUserAdress = 'https://mighty-cove-31255.herokuapp.com/api/user/me';
     }
 
     init() {
         this.loadHistory().then(() => {
             this.eventListener();
-            settingsModalWindow.init();
-            authorizationWindow.init();
             this.preloadCLose();
+            if (Cookies.get('token')) {
+                this.exit.textContent = 'Выйти';
+            }
         });
     }
 
@@ -73,7 +86,7 @@ export default class widget {
 
         this.socket.onmessage = (event) => {
             this.loadHistory().then(() => {
-                console.log(event)
+                console.log(event);
             });
         };
     }
@@ -96,7 +109,7 @@ export default class widget {
             timeElement.textContent = getString(item.date);
             timeElement.className = 'send-time';
             //
-            message.append( messageTemplate(
+            message.append(messageTemplate(
                 item.isMyMessage && name ? name :
                     item.user.name ? item.user.name : item.user.email,
                 item.text, item.date), timeElement);

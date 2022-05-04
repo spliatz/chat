@@ -1,42 +1,22 @@
-import { WIDGET_UI } from './config';
-import { AUTHORIZATION__WINDOW } from './config';
-import { USERS } from './config';
-import { CONFIRMATION__WINDOW } from './config';
 import Cookies from 'js-cookie';
+import widget from './widget';
 
-export default class authorization {
-    constructor() {
-        this.name = USERS.USER__DEFAULT;
-        //
-        this.widget = WIDGET_UI.WIDGET;
-        this.exit = WIDGET_UI.EXIT;
-        //
-        this.authorizationBlock = AUTHORIZATION__WINDOW.WRAPPER;
-        this.closeAuthorization = AUTHORIZATION__WINDOW.CLOSE;
-        this.emailInput = AUTHORIZATION__WINDOW.INPUT;
-        this.emailBtn = AUTHORIZATION__WINDOW.BTN;
-        //
-        this.confirmWrapper = CONFIRMATION__WINDOW.WRAPPER;
-        this.confirmClose = CONFIRMATION__WINDOW.CLOSE;
-        this.codeInput = CONFIRMATION__WINDOW.INPUT;
-        this.codeBtn = CONFIRMATION__WINDOW.BTN;
-        //
-        this.email = '';
-        //
-        this.confirmAdress = 'https://mighty-cove-31255.herokuapp.com/api/user';
-        this.getAdress = 'https://mighty-cove-31255.herokuapp.com/api/messages';
-        this.aboutUserAdress = 'https://mighty-cove-31255.herokuapp.com/api/user/me';
-        //
-    }
-
+export default class authorization extends widget {
     init() {
         this.eventListener();
     }
 
     eventListener() {
         this.exit.addEventListener('click', () => {
+            if (!Cookies.get('token')) {
                 this.showAuthorizationWindow();
                 this.closeWidget();
+            } else {
+                Cookies.remove('token');
+                Cookies.remove('email');
+                Cookies.remove('name');
+                this.exit.textContent = 'Войти';
+            }
         });
 
         this.closeAuthorization.addEventListener('click', () => {
@@ -76,8 +56,9 @@ export default class authorization {
 
         this.codeInput.addEventListener('keydown', event => {
             if (event.key === 'Enter' && this.codeInput) {
-                this.setCodeInCookie(this.codeInput.value);
+                this.codeRequest(this.codeInput.value);
                 this.codeInput.value = '';
+                this.exit.textContent = 'Выйти';
                 this.closeConfirmWindow();
                 this.showWidget();
             }
@@ -85,8 +66,9 @@ export default class authorization {
 
         this.codeBtn.addEventListener('click', () => {
             if (this.codeInput) {
-                this.setCodeInCookie(this.codeInput.value);
+                this.codeRequest(this.codeInput.value);
                 this.codeInput.value = '';
+                this.exit.textContent = 'Выйти';
                 this.closeConfirmWindow();
                 this.showWidget();
             }
@@ -99,7 +81,7 @@ export default class authorization {
     }
 
     requestAuthorization() {
-        const response = fetch(this.confirmAdress,
+        return fetch(this.confirmAdress,
             {
                 'headers': {'Content-Type': 'application/json'},
                 'method': 'POST',
@@ -112,8 +94,25 @@ export default class authorization {
         Cookies.set('email', this.email);
     }
 
-    setCodeInCookie(code) {
-        Cookies.set('token', code);
+    codeRequest(code) {
+        fetch(this.aboutUserAdress, {
+            'headers': {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${code}`,
+            },
+            'method': 'GET',
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    Cookies.set('token', code);
+                } else {
+                    Cookies.remove('token');
+                    Cookies.remove('email');
+                    Cookies.remove('name');
+                    this.exit.textContent = 'Войти';
+                    alert('неверный токен или почта');
+                }
+            });
     }
 
     showWidget() {
@@ -141,5 +140,4 @@ export default class authorization {
         this.confirmWrapper.style.display = 'none';
         this.codeInput.value = '';
     }
-
 }

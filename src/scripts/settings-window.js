@@ -1,5 +1,6 @@
 import messageTemplate, { WIDGET_UI, SETTINGS__WINDOW } from './config';
 import Cookies from 'js-cookie';
+import widget from './widget';
 
 export default class settingsWindow{
     constructor() {
