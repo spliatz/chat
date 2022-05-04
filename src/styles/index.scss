@@ -138,7 +138,6 @@ body {
     flex-flow: column-reverse nowrap;
     align-items: flex-start;
     padding: 8px;
-    gap: 8px;
     overflow: scroll;
 
     &::-webkit-scrollbar {
@@ -153,6 +152,7 @@ body {
       font-size: 16px;
       font-family: "Roboto", sans-serif;
       word-break: break-all;
+      margin-bottom: 8px;
 
       .message-inner {
         display: flex;
@@ -160,6 +160,7 @@ body {
 
         .userNoSelect {
           user-select: none;
+          word-break: keep-all;
         }
       }
 
@@ -179,6 +180,7 @@ body {
 
     .my-message {
       align-self: flex-end;
+      background: rgba(172, 172, 241, 0.85);
     }
   }
 

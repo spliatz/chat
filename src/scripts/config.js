@@ -36,14 +36,36 @@ export const CONFIRMATION__WINDOW = {
 };
 
 export default function messageTemplate(user, message, time) {
-    time = time.split(':').splice(0, 2).join(':');
-    return `
-        <div class="message-inner"><div class="userNoSelect">${user}:</div><div>${message}</div></div>
-        <div class="send-time">${getString(time)}</div>
-    `;
+    const messageInner = document.createElement('div');
+    messageInner.className = 'message-inner'
+    const userName = document.createElement('div');
+    const text = document.createElement('div');
+    text.textContent = message;
+    userName.textContent = user+':';
+    userName.className = 'userNoSelect';
+    messageInner.append(userName, text)
+    return (messageInner);
+
+    // return `
+    //     <div class="message-inner">
+    //         <div class="userNoSelect">${user}:</div>
+    //         <div>${message+''}</div>
+    //     </div>
+    //     <div class="send-time">${getString(time)}</div>
+    // `;
 }
 
-function getString(number) {
+export function getString(number) {
     if (number.split(':')[1].length < 2) return number.split(':')[0] + ':' + '0' + number.split(':')[1];
     return number;
 }
+
+const obj = {
+    '_id': '6270d7737f84e300160f67ef',
+    'text': 'а он говорит "это родимые пятна"',
+    'user': {'email': 'spliatzoff@gmail.com', 'name': 'lena'},
+    'createdAt': '2022-05-03T07:19:15.426Z',
+    'updatedAt': '2022-05-03T07:19:15.426Z',
+    '__v': 0,
+};
+
