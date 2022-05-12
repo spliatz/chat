@@ -1,0 +1,97 @@
+//                                               confirmation window
+
+.confirmation__wrapper {
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background: #535353 no-repeat;
+  display: none;
+
+  .confirmation__content {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff no-repeat;
+    width: 273px;
+    height: 319px;
+    padding: 21px 14px;
+    gap: 70px;
+
+    .confirmation-close-box {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+
+      h1 {
+        font-family: "Roboto", sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+      }
+
+      button {
+        cursor: pointer;
+        color: rgba(0, 0, 0, 0.45);
+        border: none;
+        outline: none;
+        background: none;
+        font-family: "Roboto", sans-serif;
+        font-size: 24px;
+        transform: rotate(45deg);
+      }
+    }
+
+    .confirmation-input__wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      h2 {
+        font-size: 16px;
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        color: #000000;
+      }
+
+      .write-code {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        input {
+          width: 80%;
+          padding: 4px;
+          color: #000000;
+          border: 1px solid #000000;
+          outline: none;
+          font-size: 16px;
+          font-family: "Roboto", sans-serif;
+          font-weight: 400;
+
+          &::placeholder {
+            color: #7C7C7C;
+            user-select: none;
+            font-size: 16px;
+            font-family: "Roboto", sans-serif;
+            font-weight: 400;
+          }
+        }
+
+        button {
+          cursor: pointer;
+          font-size: 16px;
+          font-family: "Roboto", sans-serif;
+          font-weight: 400;
+          width: 50%;
+          outline: none;
+          padding: 4px;
+          border: 1px solid black;
+          word-wrap: normal;
+          background-color: #ffffff;
+          flex-basis: 20%;
+        }
+      }
+    }
+  }
+}

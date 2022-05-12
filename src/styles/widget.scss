@@ -1,0 +1,129 @@
+//                                                    widget
+
+.widget__box {
+  z-index: 1;
+  height: 513px;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  gap: 8px;
+
+  .settings-and-exit {
+    width: inherit;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8px;
+
+    button {
+      user-select: none;
+      cursor: pointer;
+      font-family: "Roboto", sans-serif;
+      font-size: 16px;
+      padding: 9px;
+      border: 1px solid black;
+      outline: none;
+      background: none;
+    }
+  }
+
+  .message-container {
+    width: 304px;
+    height: 437px;
+    border: 1px solid black;
+    display: flex;
+    flex-flow: column-reverse nowrap;
+    align-items: flex-start;
+    padding: 8px;
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+
+    .message {
+      background: #E5E5E5;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      font-size: 16px;
+      font-family: "Roboto", sans-serif;
+      word-break: break-all;
+      margin-bottom: 8px;
+      width: fit-content;
+
+      .message-inner {
+        word-break: break-word;
+
+        div {
+          display: inline;
+          width: 100%;
+          word-break: break-word;
+        }
+
+        .userNoSelect {
+          user-select: none;
+          word-break: break-word;
+          width: 100%;
+          margin-right: 4px;
+        }
+      }
+
+      .send-time {
+        align-self: flex-end;
+        font-size: 14px;
+        font-weight: 300;
+        font-style: italic;
+        user-select: none;
+      }
+    }
+
+    .delivered {
+      background: #F6F6F6;
+    }
+
+
+    .my-message {
+      align-self: flex-end;
+      background: rgba(172, 172, 241, 0.85);
+    }
+  }
+
+  .write-message {
+    display: flex;
+    height: 32px;
+    width: 304px;
+    gap: 8px;
+
+    input {
+      color: black;
+      text-transform: lowercase;
+      flex-basis: 90%;
+      outline: none;
+      padding: 6px 0 7px 7px;
+      text-align: left;
+      border: 1px solid black;
+      border-radius: 0;
+      background: none;
+
+      &::placeholder {
+        color: #7C7C7C; //7C7C7C
+        user-select: none;
+      }
+    }
+
+    button {
+      cursor: pointer;
+      flex-basis: 10%;
+      user-select: none;
+      background: none;
+      outline: none;
+      border: 1px solid black;
+      color: black;
+      font-size: 16px;
+      font-family: "Roboto", sans-serif;
+      font-weight: 400;
+    }
+  }
+}

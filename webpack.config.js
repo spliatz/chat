@@ -9,7 +9,10 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
     mode: mode,
     entry: {
-        scripts: './src/index.js',
+        scripts: './src/index.ts',
+    },
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js'],
     },
     output: {
         assetModuleFilename: "assets/[hash][ext][query]",
@@ -25,12 +28,12 @@ module.exports = {
         new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
             template: "./src/index.html",
-            favicon: "./src/images/favicon.ico"
+            favicon: "./src/images/favicon.png"
         })],
     module: {
         rules: [
             {
-                test: /\.(sa|sc|c)ss$/,
+                test: /\.(sa|sc|c)ss$/ ,
                 use: [
                     (mode === 'development') ? "style-loader" : MiniCssExtractPlugin.loader,
                     "css-loader",
@@ -51,6 +54,9 @@ module.exports = {
                     },
                     "sass-loader",
                 ],
+            },
+            {
+                test: /\.tsx?$/, loader: "ts-loader"
             },
             {
                 test: /\.(png|svg|jpeg|jpg|gif)$/i,

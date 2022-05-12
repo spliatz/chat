@@ -1,7 +1,9 @@
-export const WIDGET_UI = {
+
+
+export  const WIDGET_UI = {
     WIDGET: document.getElementById('widget'),
     SETTING__BTN: document.getElementById('setting-btn'),
-    INPUT: document.getElementById('write__input'),
+    INPUT: <HTMLInputElement>document.getElementById('write__input'),
     WRITE__BTN: document.getElementById('write__btn'),
     CONTAINER: document.getElementById('message-container'),
     EXIT: document.getElementById('exit-btn'),
@@ -28,7 +30,7 @@ export const CONFIRMATION__WINDOW = {
     BTN: document.getElementById('code-btn'),
 };
 
-export default function messageTemplate(user, message) {
+export default function messageTemplate(user: string, message: string) {
     const messageInner = document.createElement('div');
     messageInner.className = 'message-inner'
     const userName = document.createElement('div');
@@ -40,7 +42,7 @@ export default function messageTemplate(user, message) {
     return (messageInner);
 }
 
-export function getString(number) {
+export function getString(number: string) {
     if (number.split(':')[1].length < 2) return number.split(':')[0] + ':' + '0' + number.split(':')[1];
     return number;
 }
