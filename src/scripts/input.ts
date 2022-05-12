@@ -1,8 +1,5 @@
 import { WIDGET_UI as widget } from './config';
-import { PRELOAD } from './preload';
 
-
-const preload = new PRELOAD();
 
 interface Iinput {
     input: HTMLInputElement;
@@ -16,7 +13,6 @@ export class INPUT implements Iinput {
     }
 
     init() {
-        preload.close();
         this.listener();
     }
 

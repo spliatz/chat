@@ -1,36 +1,59 @@
-import { COOKIE as Cookie } from './cookie';
-import { promises } from 'dns';
+import { COOKIE  } from './cookie';
 
-const Cookies = new Cookie();
 
 interface Iserver {
     confirmAdress: string;
     getAdress: string;
     aboutUserAdress: string;
+    socket: WebSocket;
 }
 
 export class SERVER implements Iserver {
     confirmAdress: string;
     getAdress: string;
     aboutUserAdress: string;
+    socket: WebSocket;
+
+    private static readonly confirmAdress = 'https://mighty-cove-31255.herokuapp.com/api/user';
+    private static readonly aboutUserAdress = 'https://mighty-cove-31255.herokuapp.com/api/user/me';
+
 
     constructor() {
+        this.socket = new WebSocket(`ws://mighty-cove-31255.herokuapp.com/websockets?${COOKIE.get('token')}`);
         this.confirmAdress = 'https://mighty-cove-31255.herokuapp.com/api/user';
         this.getAdress = 'https://mighty-cove-31255.herokuapp.com/api/messages';
         this.aboutUserAdress = 'https://mighty-cove-31255.herokuapp.com/api/user/me';
     }
 
-    public emailRequest() {
-        return fetch(this.confirmAdress,
+    public socketListener(): void {
+        this.socket.onmessage = () => {
+
+        };
+    }
+
+    public sendSocket(value: string): void {
+        this.socket.send(JSON.stringify({
+            text: `${value}`,
+        }));
+
+    }
+
+    loadHistory () {
+        return fetch(this.getAdress).then(res => res.json())
+            .catch(err => alert(err));
+    }
+
+    public static emailRequest() {
+        return fetch(SERVER.confirmAdress,
             {
                 'headers': {'Content-Type': 'application/json'},
                 'method': 'POST',
-                body: JSON.stringify({email: `${Cookies.get('email')}`}),
+                body: JSON.stringify({email: `${COOKIE.get('email')}`}),
             });
     }
 
-    public userAuthorized(code: string) {
-        return fetch(this.aboutUserAdress, {
+    public static userAuthorized(code: string) {
+        return fetch(SERVER.aboutUserAdress, {
             'headers': {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${code}`,
@@ -42,7 +65,7 @@ export class SERVER implements Iserver {
     public setName(name: string) {
         return fetch(this.confirmAdress, {
             headers: {
-                'Authorization': `Bearer ${Cookies.get('token')}`,
+                'Authorization': `Bearer ${COOKIE.get('token')}`,
                 'Content-Type': 'application/json;charset=utf-8',
             },
             method: 'PATCH',

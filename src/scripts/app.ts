@@ -1,13 +1,15 @@
+import { PRELOAD } from './preload';
 import { INPUT } from './input';
-import { SERVER } from './server';
-import { COOKIE } from './cookie';
+import { AUTHORIZATION } from './authorization';
 
-const cookies = new COOKIE();
-const server = new SERVER();
+const preload = new PRELOAD();
 const appInput = new INPUT();
+const authorization = new AUTHORIZATION();
 
 export class APP {
-    run() {
+   public static run() {
+        preload.close();
         appInput.init();
+        authorization.init();
     }
 }

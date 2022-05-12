@@ -1,12 +1,12 @@
 
 
 export  const WIDGET_UI = {
-    WIDGET: document.getElementById('widget'),
-    SETTING__BTN: document.getElementById('setting-btn'),
+    WIDGET: <HTMLDivElement>document.getElementById('widget'),
+    SETTING__BTN: <HTMLButtonElement>document.getElementById('setting-btn'),
     INPUT: <HTMLInputElement>document.getElementById('write__input'),
     WRITE__BTN: document.getElementById('write__btn'),
-    CONTAINER: document.getElementById('message-container'),
-    EXIT: document.getElementById('exit-btn'),
+    CONTAINER: <HTMLDivElement>document.getElementById('message-container'),
+    EXIT: <HTMLButtonElement>document.getElementById('exit-btn'),
 };
 
 export const SETTINGS__WINDOW = {
@@ -17,17 +17,17 @@ export const SETTINGS__WINDOW = {
 };
 
 export const AUTHORIZATION__WINDOW = {
-    WRAPPER: document.getElementById('authorization'),
-    CLOSE: document.getElementById('authorization-close'),
-    INPUT: document.getElementById('email-input'),
-    BTN: document.getElementById('email-btn'),
+    WRAPPER: <HTMLDivElement>document.getElementById('authorization'),
+    CLOSE: <HTMLButtonElement>document.getElementById('authorization-close'),
+    INPUT: <HTMLInputElement>document.getElementById('email-input'),
+    BTN: <HTMLButtonElement>document.getElementById('email-btn'),
 };
 
 export const CONFIRMATION__WINDOW = {
-    WRAPPER: document.getElementById('confirmation'),
-    CLOSE: document.getElementById('confirmation-close'),
-    INPUT: document.getElementById('code-input'),
-    BTN: document.getElementById('code-btn'),
+    WRAPPER: <HTMLDivElement>document.getElementById('confirmation'),
+    CLOSE: <HTMLButtonElement>document.getElementById('confirmation-close'),
+    INPUT: <HTMLInputElement>document.getElementById('code-input'),
+    BTN: <HTMLButtonElement> document.getElementById('code-btn'),
 };
 
 export default function messageTemplate(user: string, message: string) {

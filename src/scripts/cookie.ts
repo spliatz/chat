@@ -2,15 +2,15 @@ import Cookies from 'js-cookie';
 
 export class COOKIE {
 
-    public set(token: string, value: string): void {
+    public static set(token: string, value: string): void {
         Cookies.set(token, value);
     }
 
-    public get(token: string): string | undefined {
+    public static get(token: string): string | undefined {
         return Cookies.get(token);
     }
 
-    public remove(token: string): void {
+    public static remove(token: string): void {
         Cookies.remove(token);
     }
 }
