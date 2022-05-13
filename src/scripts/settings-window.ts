@@ -30,12 +30,22 @@ export class SETTINGS_WINDOW implements settings {
         ChatWidget.settingBtn.addEventListener('click', (): void => {
             ChatWidget.hideWidget();
             this.openWindow();
-        }, false)
+        }, false);
         this.closeButton.addEventListener('click', (): void => {
             this.clearInputField();
             this.closeWindow();
             ChatWidget.showWidget();
-        } , false)
+        }, false);
+        this.input.addEventListener('keydown', (event): void => {
+            if (event.key === 'Enter') {
+                SERVER.setName(this.input.value)
+                    .then(() => {
+                        this.clearInputField();
+                        this.closeWindow();
+                        ChatWidget.showWidget();
+                    });
+            }
+        }, false);
     }
 
     private openWindow(): void {

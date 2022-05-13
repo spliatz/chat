@@ -1,4 +1,6 @@
 import { WIDGET_UI as widget } from './config';
+import { SERVER } from './server';
+import { COOKIE } from './cookie';
 
 
 interface Iinput {
@@ -23,11 +25,20 @@ export class INPUT implements Iinput {
     listener() {
         this.input.addEventListener('keydown', (event) => {
             if (event.key === 'Enter' && this.input.value) {
-                this.sendServerMessage(this.input.value);
-                this.clearInputField();
+                SERVER.userAuthorized(`${COOKIE.get('token')}`)
+                    .then(res => {
+                        if (+res.status === 200) {
+                            this.sendServerMessage(this.input.value);
+                            this.clearInputField();
+                        } else {
+                            alert('Вы не авторизованы!');
+                            this.clearInputField();
+                        }
+                    })
+
             }
         });
-        this.button.addEventListener('click', (event) => {
+        this.button.addEventListener('click', () => {
             if (this.input.value) {
                 this.sendServerMessage(this.input.value);
                 this.clearInputField();
@@ -36,7 +47,7 @@ export class INPUT implements Iinput {
     }
 
     sendServerMessage(value: string): void {
-        alert(value);
+        SERVER.sendSocket(value);
     }
 
     clearInputField(): void {

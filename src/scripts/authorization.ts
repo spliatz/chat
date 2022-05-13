@@ -2,6 +2,7 @@ import { COOKIE } from './cookie';
 import { AUTHORIZATION__WINDOW, CONFIRMATION__WINDOW } from './config';
 import { ChatWidget } from './chat-widget';
 import { SERVER } from './server';
+import { RENDER } from './render';
 
 interface authorization {
     authorizationWrapper: HTMLDivElement;
@@ -43,35 +44,77 @@ export class AUTHORIZATION implements authorization {
     }
 
     private listener(): void {
-        ChatWidget.exit.addEventListener('click', (): void => this.openAuthorizationWindow(), false);
+        ChatWidget.exit.addEventListener('click', (): void => {
+            SERVER.userAuthorized(`${COOKIE.get('token')}`)
+                .then(res => {
+                    if (+res.status === 200) {
+                        COOKIE.remove('token');
+                        COOKIE.remove('name');
+                        COOKIE.remove('email');
+                        SERVER.loadHistory()
+                            .then(res => {
+                                RENDER.renderChatStory(res)
+                            })
+                        RENDER.renderAuthorizationButton(false);
+                    } else {
+                        this.openAuthorizationWindow();
+                    }
+                });
+        }, false);
+
         this.authorizationClose.addEventListener('click', (): void => {
             this.closeAuthorizationWindow();
             ChatWidget.showWidget();
         }, false);
-        this.authorizationInput.addEventListener('keydown', (event): void => {
-            if (event.key === 'Enter' && this.authorizationInput.value) {
-                this.emailCookiesAndServerRequest(this.authorizationInput.value);
-                this.clearAuthorizationInputField();
-            }
-        }, false);
-        this.authorizationButton.addEventListener('click', (event): void => {
-            if (this.authorizationInput.value) {
-                this.emailCookiesAndServerRequest(this.authorizationInput.value);
-                this.clearAuthorizationInputField();
-            }
-        }, false);
+
         this.confirmClose.addEventListener('click', () => {
             this.closeConfirmWindow();
             COOKIE.remove('email');
             COOKIE.remove('token');
             COOKIE.remove('name');
         }, false);
+
+        this.authorizationInput.addEventListener('keydown', (event): void => {
+            if (event.key === 'Enter') {
+                if (AUTHORIZATION.isEmailValid(this.authorizationInput.value)) {
+                    this.emailCookiesAndServerRequest(this.authorizationInput.value);
+                    this.clearAuthorizationInputField();
+                }  else {
+                    this.clearAuthorizationInputField();
+                    this.authorizationInput.style.background = '#ffbfaa';
+                    setTimeout(() => {
+                        this.authorizationInput.style.background = 'white';
+                    }, 1000);
+                    return;
+                }
+            }
+        }, false);
+
+        this.authorizationButton.addEventListener('click', (): void => {
+            if (AUTHORIZATION.isEmailValid(this.authorizationInput.value)) {
+                this.emailCookiesAndServerRequest(this.authorizationInput.value);
+                this.clearAuthorizationInputField();
+            } else {
+                this.clearAuthorizationInputField();
+                this.authorizationInput.style.background = '#ffbfaa';
+                setTimeout(() => {
+                    this.authorizationInput.style.background = 'white';
+                }, 1000);
+                return;
+            }
+        }, false);
+
         this.confirmInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter' && this.confirmInput.value) {
                 SERVER.userAuthorized(this.confirmInput.value)
                     .then(res => {
                         if (+res.status === 200) {
                             COOKIE.set('token', this.confirmInput.value);
+                            RENDER.renderAuthorizationButton(true);
+                            SERVER.loadHistory()
+                                .then(res => {
+                                    RENDER.renderChatStory(res);
+                                });
                             this.closeConfirmWindow();
                         }
                     })
@@ -81,13 +124,26 @@ export class AUTHORIZATION implements authorization {
                     });
             }
         }, false);
-        this.confirmButton.addEventListener('click', (event) => {
+
+        this.confirmButton.addEventListener('click', () => {
             if (this.confirmInput.value) {
                 SERVER.userAuthorized(this.confirmInput.value)
                     .then(res => {
                         if (+res.status === 200) {
                             COOKIE.set('token', this.confirmInput.value);
+                            RENDER.renderAuthorizationButton(true);
+                            SERVER.loadHistory()
+                                .then(res => {
+                                    RENDER.renderChatStory(res);
+                                });
                             this.closeConfirmWindow();
+                        } else {
+                            this.clearConfirmInputField();
+                            this.confirmInput.style.background = '#ffbfaa';
+                            setTimeout(() => {
+                                this.confirmInput.style.background = 'white';
+                            }, 1000);
+                            return;
                         }
                     })
                     .catch(error => {
@@ -136,5 +192,10 @@ export class AUTHORIZATION implements authorization {
 
     private clearConfirmInputField(): void {
         this.confirmInput.value = '';
+    }
+
+    private static isEmailValid(value: string): boolean {
+        const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+        return EMAIL_REGEXP.test(value);
     }
 }
