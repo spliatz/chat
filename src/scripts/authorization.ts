@@ -3,8 +3,6 @@ import { AUTHORIZATION__WINDOW, CONFIRMATION__WINDOW } from './config';
 import { ChatWidget } from './chat-widget';
 import { SERVER } from './server';
 
-//const chatWidget = new ChatWidget();
-
 interface authorization {
     authorizationWrapper: HTMLDivElement;
     authorizationClose: HTMLButtonElement;
@@ -51,7 +49,13 @@ export class AUTHORIZATION implements authorization {
             ChatWidget.showWidget();
         }, false);
         this.authorizationInput.addEventListener('keydown', (event): void => {
-            if (event.key === 'Enter') {
+            if (event.key === 'Enter' && this.authorizationInput.value) {
+                this.emailCookiesAndServerRequest(this.authorizationInput.value);
+                this.clearAuthorizationInputField();
+            }
+        }, false);
+        this.authorizationButton.addEventListener('click', (event): void => {
+            if (this.authorizationInput.value) {
                 this.emailCookiesAndServerRequest(this.authorizationInput.value);
                 this.clearAuthorizationInputField();
             }
@@ -63,7 +67,22 @@ export class AUTHORIZATION implements authorization {
             COOKIE.remove('name');
         }, false);
         this.confirmInput.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') {
+            if (event.key === 'Enter' && this.confirmInput.value) {
+                SERVER.userAuthorized(this.confirmInput.value)
+                    .then(res => {
+                        if (+res.status === 200) {
+                            COOKIE.set('token', this.confirmInput.value);
+                            this.closeConfirmWindow();
+                        }
+                    })
+                    .catch(error => {
+                        this.clearConfirmInputField();
+                        alert(error);
+                    });
+            }
+        }, false);
+        this.confirmButton.addEventListener('click', (event) => {
+            if (this.confirmInput.value) {
                 SERVER.userAuthorized(this.confirmInput.value)
                     .then(res => {
                         if (+res.status === 200) {

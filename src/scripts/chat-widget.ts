@@ -1,4 +1,5 @@
-import { WIDGET_UI } from './config';
+import { WIDGET_UI, SETTINGS__WINDOW } from './config';
+import { SETTINGS_WINDOW } from './settings-window';
 
 interface widget {
     widget: HTMLDivElement;
@@ -14,8 +15,8 @@ export class ChatWidget implements widget {
     exit: HTMLButtonElement;
 
     //public static widget: HTMLDivElement;
-    public static messageContainer: HTMLDivElement;
-    public static settingBtn: HTMLDivElement;
+    static messageContainer: HTMLDivElement;
+    static settingBtn =  WIDGET_UI.SETTING__BTN;
     //public static exit: HTMLButtonElement;
     static exit = WIDGET_UI.EXIT;
     static widget = WIDGET_UI.WIDGET;

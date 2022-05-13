@@ -4,16 +4,16 @@ export  const WIDGET_UI = {
     WIDGET: <HTMLDivElement>document.getElementById('widget'),
     SETTING__BTN: <HTMLButtonElement>document.getElementById('setting-btn'),
     INPUT: <HTMLInputElement>document.getElementById('write__input'),
-    WRITE__BTN: document.getElementById('write__btn'),
+    WRITE__BTN: <HTMLButtonElement>document.getElementById('write__btn'),
     CONTAINER: <HTMLDivElement>document.getElementById('message-container'),
     EXIT: <HTMLButtonElement>document.getElementById('exit-btn'),
 };
 
 export const SETTINGS__WINDOW = {
-    WINDOW: document.getElementById('setting-window'),
-    CLOSE__BTN: document.getElementById('setting-window__close'),
-    INPUT: document.getElementById('settings-input'),
-    BTN: document.getElementById('settings-btn'),
+    WINDOW: <HTMLDivElement>document.getElementById('setting-window'),
+    CLOSE__BTN: <HTMLButtonElement>document.getElementById('setting-window__close'),
+    INPUT: <HTMLInputElement>document.getElementById('settings-input'),
+    BTN: <HTMLButtonElement>document.getElementById('settings-btn'),
 };
 
 export const AUTHORIZATION__WINDOW = {
