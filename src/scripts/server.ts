@@ -37,7 +37,7 @@ export class SERVER implements Iserver {
         SERVER.socketEvents();
     }
 
-    public static loadHistory () {
+    public static loadHistory (): Promise<Response> {
         return fetch(SERVER.getAdress)
             .then(res => res.json())
             .catch(err => alert(err));
@@ -70,7 +70,7 @@ export class SERVER implements Iserver {
 
     }
 
-    public static emailRequest() {
+    public static emailRequest(): Promise<Response>{
         return fetch(SERVER.confirmAdress,
             {
                 'headers': {'Content-Type': 'application/json'},
@@ -79,8 +79,8 @@ export class SERVER implements Iserver {
             });
     }
 
-    public static setName(name: string) {
-       return SERVER.userAuthorized(''+COOKIE.get('token'))
+    public static setName(name: string){
+       return SERVER.userAuthorized(`${COOKIE.get('token')}`)
             .then(res => {
                 if (+res.status === 200) {
                     COOKIE.set('name', name)
@@ -100,12 +100,11 @@ export class SERVER implements Iserver {
                 } else {
                     console.log(res);
                     alert('Вы не авторизованы!');
-                    return;
                 }
             })
     }
 
-    public static userAuthorized(code: string) {
+    public static userAuthorized(code: string): Promise<Response> {
         return fetch(SERVER.aboutUserAdress, {
             'headers': {
                 'Content-Type': 'application/json',
