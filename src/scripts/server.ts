@@ -18,11 +18,11 @@ export class SERVER implements Iserver {
     private static readonly confirmAdress = 'https://mighty-cove-31255.herokuapp.com/api/user';
     private static readonly aboutUserAdress = 'https://mighty-cove-31255.herokuapp.com/api/user/me';
     private static readonly getAdress = 'https://mighty-cove-31255.herokuapp.com/api/messages';
-    public static ws = new WebSocket(`ws://mighty-cove-31255.herokuapp.com/websockets?${COOKIE.get('token')}`);
+    public static ws = new WebSocket(`wss://mighty-cove-31255.herokuapp.com/websockets?${COOKIE.get('token')}`);
 
 
     constructor() {
-        this.ws = new WebSocket(`ws://mighty-cove-31255.herokuapp.com/websockets?${COOKIE.get('token')}`);
+        this.ws = new WebSocket(`wss://mighty-cove-31255.herokuapp.com/websockets?${COOKIE.get('token')}`);
         this.confirmAdress = 'https://mighty-cove-31255.herokuapp.com/api/user';
         this.getAdress = 'https://mighty-cove-31255.herokuapp.com/api/messages';
         this.aboutUserAdress = 'https://mighty-cove-31255.herokuapp.com/api/user/me';
@@ -33,7 +33,7 @@ export class SERVER implements Iserver {
     }
 
     private static openSocket(): void {
-        SERVER.ws = new WebSocket(`ws://mighty-cove-31255.herokuapp.com/websockets?${COOKIE.get('token')}`);
+        SERVER.ws = new WebSocket(`wss://mighty-cove-31255.herokuapp.com/websockets?${COOKIE.get('token')}`);
         SERVER.socketEvents();
     }
 
