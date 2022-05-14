@@ -9,7 +9,10 @@ export class RENDER {
 
     public static init() {
         SERVER.loadHistory()
-            .then(res => RENDER.renderChatStory(res));
+            .then(res => RENDER.renderChatStory(res))
+            .then(() => {
+            PRELOAD.close();
+        });
         SERVER.userAuthorized(`${COOKIE.get('token')}`)
             .then(res => {
                 if (+res.status === 200) {
@@ -18,9 +21,6 @@ export class RENDER {
                     RENDER.renderAuthorizationButton(false);
                 }
             })
-            .then(() => {
-                PRELOAD.close();
-            });
     }
 
     public static renderChatStory(response: any) {

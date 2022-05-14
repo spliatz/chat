@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.4",
+    "cloc": "^2.9.0",
     "node": "^17.7.2"
   }
 }
