@@ -1,5 +1,5 @@
 export class PRELOAD {
-    close() {
+    public static close() {
         document.body.classList.add('loaded_hiding');
         window.setTimeout(function() {
             document.body.classList.add('loaded');

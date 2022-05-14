@@ -3,6 +3,7 @@ import messageTemplate from './config';
 import { SERVER } from './server';
 import { getString } from './config';
 import { COOKIE } from './cookie';
+import { PRELOAD } from './preload';
 
 export class RENDER {
 
@@ -17,6 +18,9 @@ export class RENDER {
                     RENDER.renderAuthorizationButton(false);
                 }
             })
+            .then(() => {
+                PRELOAD.close();
+            });
     }
 
     public static renderChatStory(response: any) {

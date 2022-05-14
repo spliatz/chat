@@ -1,4 +1,4 @@
-import { COOKIE  } from './cookie';
+import { COOKIE } from './cookie';
 import { RENDER } from './render';
 
 
@@ -37,7 +37,7 @@ export class SERVER implements Iserver {
         SERVER.socketEvents();
     }
 
-    public static loadHistory (): Promise<Response> {
+    public static loadHistory(): Promise<Response> {
         return fetch(SERVER.getAdress)
             .then(res => res.json())
             .catch(err => alert(err));
@@ -58,7 +58,7 @@ export class SERVER implements Iserver {
 
         SERVER.ws.onmessage = () => {
             SERVER.loadHistory()
-                .then(res => RENDER.renderChatStory(res))
+                .then(res => RENDER.renderChatStory(res));
         };
 
     }
@@ -70,7 +70,7 @@ export class SERVER implements Iserver {
 
     }
 
-    public static emailRequest(): Promise<Response>{
+    public static emailRequest(): Promise<Response> {
         return fetch(SERVER.confirmAdress,
             {
                 'headers': {'Content-Type': 'application/json'},
@@ -79,29 +79,17 @@ export class SERVER implements Iserver {
             });
     }
 
-    public static setName(name: string){
-       return SERVER.userAuthorized(`${COOKIE.get('token')}`)
-            .then(res => {
-                if (+res.status === 200) {
-                    COOKIE.set('name', name)
-                    SERVER.loadHistory()
-                        .then(res => {
-                            RENDER.renderChatStory(res);
-                        });
-                    SERVER.ws.close();
-                    return fetch(SERVER.confirmAdress, {
-                        headers: {
-                            'Authorization': `Bearer ${COOKIE.get('token')}`,
-                            'Content-Type': 'application/json;charset=utf-8',
-                        },
-                        method: 'PATCH',
-                        body: JSON.stringify({name: `${name}`}),
-                    });
-                } else {
-                    console.log(res);
-                    alert('Вы не авторизованы!');
-                }
-            })
+    public static setName(name: string) {
+        return fetch(SERVER.confirmAdress, {
+            headers: {
+                'Authorization': `Bearer ${COOKIE.get('token')}`,
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+            method: 'PATCH',
+            body: JSON.stringify({name: `${name}`}),
+        })
+            .then(() => COOKIE.set('name', name))
+            .catch(error => console.log(error));
     }
 
     public static userAuthorized(code: string): Promise<Response> {

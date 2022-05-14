@@ -23,27 +23,29 @@ export class INPUT implements Iinput {
     }
 
     listener() {
-        this.input.addEventListener('keydown', (event) => {
+        this.input.addEventListener('keydown', (event): void => {
             if (event.key === 'Enter' && this.input.value) {
-                SERVER.userAuthorized(`${COOKIE.get('token')}`)
-                    .then(res => {
-                        if (+res.status === 200) {
-                            this.sendServerMessage(this.input.value);
-                            this.clearInputField();
-                        } else {
-                            alert('Вы не авторизованы!');
-                            this.clearInputField();
-                        }
-                    })
-
+                this.sendMessageToServerAndRenderCallback(this.input.value);
             }
         });
-        this.button.addEventListener('click', () => {
+        this.button.addEventListener('click', (): void => {
             if (this.input.value) {
-                this.sendServerMessage(this.input.value);
-                this.clearInputField();
+                this.sendMessageToServerAndRenderCallback(this.input.value);
             }
         });
+    }
+
+    private sendMessageToServerAndRenderCallback(name: string): void {
+        SERVER.userAuthorized(`${COOKIE.get('token')}`)
+            .then(res => {
+                if (+res.status === 200) {
+                    this.sendServerMessage(name);
+                    this.clearInputField();
+                } else {
+                    alert('Вы не авторизованы!');
+                    this.clearInputField();
+                }
+            });
     }
 
     sendServerMessage(value: string): void {
