@@ -39,7 +39,7 @@ export class RENDER {
                 timeElement.className = 'send-time';
                 //
                 message.append(messageTemplate(
-                        (isMyUser && COOKIE.get('name') ? COOKIE.get('name') : item.user.name || item.user.email), item.text),
+                        (isMyUser ? 'Я' : item.user.name || item.user.email), item.text),
                     timeElement);
                 //
                 widget.CONTAINER.append(message);
