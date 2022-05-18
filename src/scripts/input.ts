@@ -4,16 +4,19 @@ import { COOKIE } from './cookie';
 
 
 interface Iinput {
+    form: HTMLFormElement;
     input: HTMLInputElement;
     button: HTMLButtonElement;
 
 }
 
 export class INPUT implements Iinput {
+    form: HTMLFormElement;
     input: HTMLInputElement;
     button: HTMLButtonElement;
 
     constructor() {
+        this.form = widget.FORM;
         this.input = widget.INPUT;
         this.button = widget.WRITE__BTN;
     }
@@ -23,16 +26,10 @@ export class INPUT implements Iinput {
     }
 
     listener() {
-        this.input.addEventListener('keydown', (event): void => {
-            if (event.key === 'Enter' && this.input.value) {
-                this.sendMessageToServerAndRenderCallback(this.input.value);
-            }
-        });
-        this.button.addEventListener('click', (): void => {
-            if (this.input.value) {
-                this.sendMessageToServerAndRenderCallback(this.input.value);
-            }
-        });
+        this.form.addEventListener('submit', (): boolean => {
+            this.sendMessageToServerAndRenderCallback(this.input.value);
+            return false;
+        })
     }
 
     private sendMessageToServerAndRenderCallback(name: string): void {

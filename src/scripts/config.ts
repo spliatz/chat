@@ -3,6 +3,7 @@ import { COOKIE } from './cookie';
 export const WIDGET_UI = {
     WIDGET: document.getElementById('widget') as HTMLDivElement,
     SETTING__BTN: document.getElementById('setting-btn') as HTMLButtonElement,
+    FORM:  document.getElementById('send-message_form') as HTMLFormElement,
     INPUT: document.getElementById('write__input') as HTMLInputElement,
     WRITE__BTN: document.getElementById('write__btn') as HTMLButtonElement,
     CONTAINER: document.getElementById('message-container') as HTMLDivElement,
