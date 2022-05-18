@@ -1,5 +1,4 @@
-import { WIDGET_UI as widget } from './config';
-import messageTemplate from './config';
+import { createMessage, WIDGET_UI as widget } from './config';
 import { SERVER } from './server';
 import { getString } from './config';
 import { COOKIE } from './cookie';
@@ -11,8 +10,8 @@ export class RENDER {
         SERVER.loadHistory()
             .then(res => RENDER.renderChatStory(res))
             .then(() => {
-            PRELOAD.close();
-        });
+                PRELOAD.close();
+            });
         SERVER.userAuthorized(`${COOKIE.get('token')}`)
             .then(res => {
                 if (+res.status === 200) {
@@ -20,32 +19,22 @@ export class RENDER {
                 } else {
                     RENDER.renderAuthorizationButton(false);
                 }
-            })
+            });
     }
 
     public static renderChatStory(response: any) {
         RENDER.renderEmptyChat();
         response.messages.reverse().forEach((item: any, index: number) => {
             if (index < 200) {
-                const date = new Date(item.createdAt);
-                const time = date.getHours() + ':' + date.getMinutes();
-                const isMyUser = COOKIE.get('email') === item.user.email;
-                //
-                const message = document.createElement('div');
-                message.className = `message  ${isMyUser ? 'my-message' : ''}`;
-                //
-                const timeElement = document.createElement('div');
-                timeElement.textContent = getString(time);
-                timeElement.className = 'send-time';
-                //
-                message.append(messageTemplate(
-                        (isMyUser ? 'Я' : item.user.name || item.user.email), item.text),
-                    timeElement);
-                //
-                widget.CONTAINER.append(message);
+                widget.CONTAINER.append(createMessage(item));
                 widget.CONTAINER.scrollBy(0, widget.CONTAINER.offsetHeight - widget.CONTAINER.scrollTop);
             }
         });
+    }
+
+    public static renderNewMessage(data: any) {
+        widget.CONTAINER.prepend(createMessage(data));
+        widget.CONTAINER.scrollBy(0, widget.CONTAINER.offsetHeight - widget.CONTAINER.scrollTop);
     }
 
     private static renderEmptyChat() {

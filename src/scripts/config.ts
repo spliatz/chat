@@ -1,3 +1,5 @@
+import { COOKIE } from './cookie';
+
 export const WIDGET_UI = {
     WIDGET: document.getElementById('widget') as HTMLDivElement,
     SETTING__BTN: document.getElementById('setting-btn') as HTMLButtonElement,
@@ -28,7 +30,7 @@ export const CONFIRMATION__WINDOW = {
     BTN: document.getElementById('code-btn') as HTMLButtonElement,
 };
 
-export default function messageTemplate(user: string, message: string) {
+function messageTemplate(user: string, message: string) {
     const messageInner = document.createElement('div');
     messageInner.className = 'message-inner';
     const userName = document.createElement('div');
@@ -38,6 +40,25 @@ export default function messageTemplate(user: string, message: string) {
     userName.className = 'userNoSelect';
     messageInner.append(userName, text);
     return (messageInner);
+}
+
+export function createMessage(data: any): HTMLDivElement {
+    const date: Date = new Date(data.createdAt);
+    const time: string = date.getHours() + ':' + date.getMinutes();
+    const isMyUser: boolean = COOKIE.get('email') === data.user.email;
+    //
+    const message = document.createElement('div') as HTMLDivElement;
+    message.className = `message  ${isMyUser ? 'my-message' : ''}`;
+    //
+    const timeElement = document.createElement('div') as HTMLDivElement;
+    timeElement.textContent = getString(time);
+    timeElement.className = 'send-time';
+    //
+    message.append(messageTemplate(
+            (isMyUser ? 'Я' : data.user.name || data.user.email), data.text),
+        timeElement);
+    //
+    return message;
 }
 
 export function getString(number: string) {

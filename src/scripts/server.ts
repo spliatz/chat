@@ -56,11 +56,9 @@ export class SERVER implements Iserver {
             SERVER.ws.close();
         };
 
-        SERVER.ws.onmessage = () => {
-            SERVER.loadHistory()
-                .then(res => RENDER.renderChatStory(res));
+        SERVER.ws.onmessage = (event) => {
+            RENDER.renderNewMessage(JSON.parse(event.data));
         };
-
     }
 
     public static sendSocket(value: string): void {
